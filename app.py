@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 import requests
-import openai
+from openai import OpenAI
 from dotenv import load_dotenv
 import os
 
@@ -28,27 +28,29 @@ def get_reviews(place_id):
     return reviews
 
 # Function to process reviews with GPT
+
+
 def process_with_gpt(reviews):
-    openai.api_key = openai_key
+    # Instantiate the OpenAI client
+    client = OpenAI(api_key=openai_key)
     review_texts = ' '.join([review['text'] for review in reviews])
-    prompt = f"Analyze and summarize these {review_texts} from google maps into an engaging, witty, and informative brief (try and keep it no-nonsense, brutally honest at the same time). Write an engaging and reasonably witty brief as if you're texting a friend. The summary should be balanced, covering both positive and negative aspects in a light and humorous way. Avoid focusing on specifics from individual reviews. Instead, provide a general impression that captures the overall sentiment. Use casual language and reasonable amout of emojis to make it fun. Keep it under 5 sentences. Conclude with a brief personal recommendation (go or not). Remember, it should sound like an honest and casual conversation between friends, not a formal review."
+    prompt = f"Analyze and summarize these {review_texts} from google maps into an engaging, witty, and informative brief (try and keep it no-nonsense, brutally honest at the same time). Write an engaging and reasonably witty brief as if you're texting a friend. The summary should be balanced, covering both positive and negative aspects in a light and humorous way. Avoid focusing on specifics from individual reviews. Instead, provide a general impression that captures the overall sentiment. Use casual language and reasonable amount of emojis to make it fun. Keep it under 5 sentences. Conclude with a brief personal recommendation (go or not). Remember, it should sound like an honest and casual conversation between friends, not a formal review."
+
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo-1106",
             messages=[
                 {"role": "system", "content": "You are a creative, informal, and engaging friend offering a balanced summary of a place."},
                 {"role": "user", "content": prompt}
             ],
             max_tokens=150,
-            temperature=0.7  # Adjusting creativity level
+            temperature=0.7
         )
         return response.choices[0].message["content"].strip()
-    except openai.error.OpenAIError as e:
-        print(f"OpenAI API error: {e}")
-        return "An error occurred while processing the reviews. Please try again later."
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        return "An unexpected error occurred. Please try again later."
+        print(f"An error occurred: {e}")
+        return "An error occurred while processing the reviews. Please try again later."
+
 
 @app.route('/get-reviews', methods=['POST'])
 def get_reviews_endpoint():
