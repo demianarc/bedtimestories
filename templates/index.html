@@ -53,7 +53,9 @@
         .hidden {
             display: none;
         }
-
+        .toptext {
+            font-size: 1.25rem; /* Set the size you prefer */
+        }
         .story-output {
             font-size: 1.5rem; /* Set the size you prefer */
         }
@@ -67,18 +69,30 @@
                 padding: 1rem;
             }
         }
+        .loader {
+    border: 1px solid #f3f3f3; /* Light grey */
+    border-top: 5px solid #c80d00; /* App's brand color */
+    border-radius: 510%;
+    width: 30px; /* Adjusted size */
+    height: 30px; /* Adjusted size */
+    animation: spin 1.5s linear infinite;
+    margin: 0 auto; /* Center the loader */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
     </style>
 </head>
 <body>
-    <form id="storyForm" class="space-y-4">
     <div class="container mx-auto p-8 flex justify-center items-center min-h-screen">
         <div class="max-w-md w-full">
+            <!-- Card container -->
             <div class="card p-6">
-                <div class="flex justify-center items-center min-h-screen">
-                    <div class="w-full max-w-xl mx-auto">
-                        <h1 class="text-center text-5xl text-white font-bold mb-2">🧚‍♂️✨ BedTime Story Maker ✨🧚‍♂️</h1>
-                        <div class="card">
-                            <p class="text-center text-lg text-white mb-4">Create a magical bedtime story for your child in just a few clicks!</p>
+                <h1 class="text-center text-5xl text-white font-bold mb-2">🧚‍♂️✨ BedTime Story Maker ✨🧚‍♂️</h1>
+                <p class="text-center text-lg text-white mb-4 toptext">Create a magical bedtime story for your child ✨</p>
                 <form id="storyForm" class="space-y-4">
                     <div class="select-wrapper">
                         <label for="theme" class="block mb-2 text-gray-700">Theme:</label>
@@ -140,8 +154,10 @@
                         <input type="text" id="heroName" name="heroName" class="w-full p-4 text-lg form-input" required> <!-- Removed the 'input' class -->
                     </div>
                     <button type="submit" class="btn btn-animate">Generate Story</button>
+                    <div id="loader" class="loader hidden"></div>
                 </form>
             </div>
+            
             <div id="storyOutput" class="card mt-6 p-4 text-gray-700 hidden story-output"></div>
         </div>
     </div>
@@ -155,20 +171,28 @@
                 storyLength: document.getElementById('storyLength').value,
                 values: document.getElementById('values').value
             };
+            // Show the loader
+            document.getElementById('loader').classList.remove('hidden');
             fetch('/generate_story', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(formData)
             })
-    .then(response => response.json())
-    .then(data => {
-    var storyOutput = document.getElementById('storyOutput');
-    storyOutput.innerHTML = data.story.replace(/\n\n/g, '<p>').replace(/\n/g, '<br>');
-    storyOutput.classList.remove('hidden');
-    storyOutput.classList.add('story-output'); // Add this line
-})
-    .catch(error => console.error('Error:', error));
-});
+            .then(response => response.json())
+            .then(data => {
+                // Hide the loader
+                document.getElementById('loader').classList.add('hidden');
+                // Process and display the story
+                var storyOutput = document.getElementById('storyOutput');
+                storyOutput.innerHTML = data.story.replace(/\n\n/g, '<p>').replace(/\n/g, '<br>');
+                storyOutput.classList.remove('hidden');
+            })
+            .catch(error => {
+                // Hide the loader also in case of error
+                document.getElementById('loader').classList.add('hidden');
+                console.error('Error:', error);
+            });
+        });
     </script>
 </body>
 </html>
