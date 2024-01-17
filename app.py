@@ -15,14 +15,28 @@ client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 # Function to generate story with GPT-3.5 Turbo
 def generate_story_with_gpt(theme, hero_name, story_length, value):
     try:
+        # Token limits based on story length to avoid cutting off
+        token_limits = {
+            'Very Short': 150,
+            'Short': 300,
+            'Medium': 600,
+            'Long': 1024
+        }
+        
         # Constructing the prompt
-        prompt = f"Create a story with theme: {theme}, hero: {hero_name}, emphasizing the value of {value}. Story length: {story_length}."
+        prompt_intro = f"Write a beautiful children's story about a hero named {hero_name}. Use creative writing techniques. "
+        prompt_body = f"who embodies and exemplifies the value of {value} in a {theme} setting. "
+        prompt_conclusion = f"The story should be {story_length}, heartwarming and conclude with a moral lesson.It should be nicely formatted, with bold and line jumps when necessary. Don't overstate the hero's name."
+        promptend = f"Format the story with an introductory sentence, followed by paragraphs, and end with a concluding sentence that includes a moral of the story, but in a creative way. "
+        prompt = prompt_intro + prompt_body + prompt_conclusion + promptend
+
+    
 
         # Making the API call using the correct format
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
-                {"role": "system", "content": "You are a skilled and imaginative storyteller."},
+                {"role": "system", "content": "You are a skilled and imaginative storyteller, used to avoiding repetitions."},
                 {"role": "user", "content": prompt}
             ]
         )

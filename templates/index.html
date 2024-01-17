@@ -5,83 +5,170 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BedTime Story Maker</title>
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet"> <!-- Playful font -->
+    <style>
+        h1 {
+            text-align: center;
+            margin-top: 0.5rem; /* Adjust as needed for better centering */
+        }
+        .explanatory-text {
+            padding-top: 0.25rem; /* Adjust as needed for less space */
+            margin-bottom: 0.25rem; /* Or adjust the margin */
+        }
+        body {
+            font-family: 'Indie Flower', cursive; /* Playful, legible font */
+            background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%); /* Warm, inviting gradient background */
+            color: #333; /* Slightly softened text for readability */
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.9); /* Slightly more opaque for better readability */
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            padding: 1.5rem;
+            margin: 1rem;
+        }
+        .input, .btn {
+            font-size: 1.125rem;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            border-radius: 0.75rem;
+        }
+        .btn {
+            background-color: #ff847c;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(255, 132, 124, 0.65);
+        }
+        .btn:hover {
+            background-color: #ff6b6b;
+        }
+        .select-wrapper:after {
+            color: #ff847c;
+        }
+        .select-wrapper select {
+            padding-right: 2.5rem; /* Make room for the arrow */
+        }
+        .hidden {
+            display: none;
+        }
+
+        .story-output {
+            font-size: 1.25rem; /* Set the size you prefer */
+        }
+        /* Responsive typography */
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 4rem;
+            }
+            .input, .btn {
+                font-size: 1.25rem;
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
-    <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-bold mb-4 text-center">Create a Personalized BedTime Story</h1>
-        <form id="storyForm" class="grid gap-4 max-w-md mx-auto">
-
-            <!-- Theme Selection -->
-            <div>
-                <label for="theme" class="block mb-2 font-semibold">Theme:</label>
-                <select id="theme" name="theme" class="border p-2 rounded w-full">
-                    <option value="Pirates">Pirates</option>
-                    <option value="Jungle">Jungle</option>
-                    <option value="Superheroes">Superheroes</option>
-                    <!-- Additional themes can be added here -->
-                </select>
+<body>
+    <form id="storyForm" class="space-y-4">
+    <div class="container mx-auto p-8 flex justify-center items-center min-h-screen">
+        <div class="max-w-md w-full">
+            <div class="card p-6">
+                <div class="flex justify-center items-center min-h-screen">
+                    <div class="w-full max-w-xl mx-auto">
+                        <h1 class="text-center text-5xl text-white font-bold mb-2">🧚‍♂️✨ BedTime Story Maker ✨🧚‍♂️</h1>
+                        <div class="card">
+                            <p class="text-center text-lg text-white mb-4">Create a magical bedtime story for your child in just a few clicks!</p>
+                <form id="storyForm" class="space-y-4">
+                    <div class="select-wrapper">
+                        <label for="theme" class="block mb-2 text-gray-700">Theme:</label>
+                        <select id="theme" name="theme" class="input">
+                            <option value="Pirates">Pirates ⚔️</option>
+            <option value="Jungle">Jungle 🌳</option>
+            <option value="Superheroes">Superheroes 🦸‍♂️</option>
+            <option value="Fairies">Fairies 🧚‍♂️</option>
+            <option value="Dragons">Dragons 🐲✨</option>
+            <option value="Elves">Elves 🧝‍♀️</option>
+            <option value="Underwater">Underwater 🌊🐠</option>
+            <option value="Space">Space 🚀🌌</option>
+            <option value="Enchanted Kingdom">Enchanted Kingdom 🏰✨</option>
+            <option value="WinterWonderland">Winter Wonderland ❄️☃️</option>
+            <option value="DesertAdventure">Desert Adventure 🐫🏜️</option>
+            <option value="Rainforest">Rainforest 🦜🌿</option>
+            <option value="Time Travel">Time Travel ⏰🌀</option>
+            <option value="CandyLand">Candy Land 🍭🍬</option>
+            <option value="Pirate Ship">Pirate Ship 🏴‍☠️⚓</option>
+            <option value="Dinosaur Era">Dinosaur Era 🦕🦖</option>
+            <option value="Mystery">Mystery 🕵️‍♂️🔍</option>
+                        </select>
+                    </div>
+                    
+                    <div class="select-wrapper">
+                        <label for="storyLength" class="block mb-2 text-gray-700">Story Length:</label>
+                        <select id="storyLength" name="storyLength" class="input">
+                            <option value="Very Short">Very Short</option>
+                            <option value="Short">Short</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Long">Long</option>
+                        </select>
+                    </div>
+                    <div class="select-wrapper">
+                        <label for="values" class="block mb-2 text-gray-700">Values/Morals:</label>
+                        <select id="values" name="values" class="input">
+                            <option value="Kindness">Kindness ✨</option>
+            <option value="Bravery">Bravery 💪</option>
+            <option value="Honesty">Honesty 🗣️</option>
+            <option value="Openness">Openness 🗺️</option>
+            <option value="Courage">Courage 🛡️</option>
+            <option value="Friendship">Friendship 👫</option>
+            <option value="Respect">Respect 🤝</option>
+            <option value="Responsibility">Responsibility 🙋‍♂️</option>
+            <option value="Perseverance">Perseverance 🧗‍♂️</option>
+            <option value="Creativity">Creativity 🎨</option>
+            <option value="Curiosity">Curiosity 🔍</option>
+            <option value="Empathy">Empathy 💖</option>
+            <option value="Cooperation">Cooperation 👐</option>
+            <option value="Sharing">Sharing 🔄</option>
+            <option value="Patience">Patience ⏳</option>
+            <option value="Love">Love ❤️</option>
+            <option value="Gratitude">Gratitude 🙏</option>
+            <option value="Humility">Humility 🌱</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="heroName" class="block mb-2 text-gray-700">Hero's Name:</label>
+                        <input type="text" id="heroName" name="heroName" class="w-full p-4 text-lg form-input" required> <!-- Removed the 'input' class -->
+                    </div>
+                    <button type="submit" class="btn btn-animate">Generate Story</button>
+                </form>
             </div>
-
-            <!-- Hero Name Input -->
-            <div>
-                <label for="heroName" class="block mb-2 font-semibold">Hero's Name:</label>
-                <input type="text" id="heroName" name="heroName" class="border p-2 rounded w-full" required>
-            </div>
-
-            <!-- Story Length Selection -->
-            <div>
-                <label for="storyLength" class="block mb-2 font-semibold">Story Length:</label>
-                <select id="storyLength" name="storyLength" class="border p-2 rounded w-full">
-                    <option value="Short">Short</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Long">Long</option>
-                    <!-- Additional lengths can be added here -->
-                </select>
-            </div>
-
-            <!-- Values/Morals Selection -->
-            <div>
-                <label for="values" class="block mb-2 font-semibold">Values/Morals:</label>
-                <select id="values" name="values" class="border p-2 rounded w-full">
-                    <option value="Kindness">Kindness</option>
-                    <option value="Bravery">Bravery</option>
-                    <option value="Honesty">Honesty</option>
-                    <!-- Additional values can be added here -->
-                </select>
-            </div>
-
-            <button type="submit" class="bg-blue-500 text-white p-2 rounded mt-4 w-full">Generate Story</button>
-        </form>
-        <div id="storyOutput" class="mt-8 p-4 border rounded text-gray-700"></div>
+            <div id="storyOutput" class="card mt-6 p-4 text-gray-700 hidden story-output"></div>
+        </div>
     </div>
 
     <script>
         document.getElementById('storyForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission behavior
-
-            // Gather form data
+            e.preventDefault();
             var formData = {
                 theme: document.getElementById('theme').value,
                 heroName: document.getElementById('heroName').value,
                 storyLength: document.getElementById('storyLength').value,
                 values: document.getElementById('values').value
             };
-
-            // Send form data to Flask backend
             fetch('/generate_story', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(formData)
             })
-            .then(response => response.json())
-            .then(data => {
-                // Display the generated story
-                document.getElementById('storyOutput').textContent = data.story;
-            })
-            .catch(error => console.error('Error:', error));
-        });
+    .then(response => response.json())
+    .then(data => {
+    var storyOutput = document.getElementById('storyOutput');
+    storyOutput.innerHTML = data.story.replace(/\n\n/g, '<p>').replace(/\n/g, '<br>');
+    storyOutput.classList.remove('hidden');
+    storyOutput.classList.add('story-output'); // Add this line
+})
+    .catch(error => console.error('Error:', error));
+});
     </script>
 </body>
 </html>
